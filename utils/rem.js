@@ -1,20 +1,13 @@
-(function (designWidth, maxWidth) {
-    var doc = document,
-        win = window;
-    var docEl = doc.documentElement;
-    var tid;
-    var rootItem, rootStyle;
+(function (designWidth, maxWidth) {   
+    let tid;
+    let rootItem, rootStyle;
 
-    function refreshRem() {
-        var width = docEl.getBoundingClientRect().width;
-        if (!maxWidth) {
-            maxWidth = 540;
-        } 
-        if (width > maxWidth) {
-            width = maxWidth;
-        }
+    function restsize() {
+        let width = document.documentElement.getBoundingClientRect().width;
+        if (!maxWidth) maxWidth = 540;
+        if (width > maxWidth) width = maxWidth;
         //与淘宝做法不同，直接采用简单的rem换算方法1rem=100px
-        var rem = width * 100 / designWidth;
+        let rem = width * 100 / designWidth;
         //兼容UC开始
         rootStyle = "html{font-size:" + rem + 'px !important}';
         rootItem = document.getElementById('rootsize') || document.createElement("style");
@@ -32,27 +25,27 @@
             }
         }
         //兼容UC结束
-        docEl.style.fontSize = rem + "px";
+        document.documentElement.style.fontSize = rem + "px";
     };
-    refreshRem();
+    restsize();
 
-    win.addEventListener("resize", function () {
+    window.addEventListener("resize", function () {
         clearTimeout(tid); //防止执行两次
-        tid = setTimeout(refreshRem, 300);
+        tid = setTimeout(restsize, 300);
     }, false);
 
-    win.addEventListener("pageshow", function (e) {
+    window.addEventListener("pageshow", function (e) {
         if (e.persisted) { // 浏览器后退的时候重新计算
             clearTimeout(tid);
-            tid = setTimeout(refreshRem, 300);
+            tid = setTimeout(restsize, 300);
         }
     }, false);
 
-    if (doc.readyState === "complete") {
-        doc.body.style.fontSize = "16px";
+    if (document.readyState === "complete") {
+        document.body.style.fontSize = "16px";
     } else {
-        doc.addEventListener("DOMContentLoaded", function (e) {
-            doc.body.style.fontSize = "16px";
+        document.addEventListener("DOMContentLoaded", function (e) {
+            document.body.style.fontSize = "16px";
         }, false);
     }
 })(320, 1024);

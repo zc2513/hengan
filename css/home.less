@@ -1,11 +1,11 @@
-@media screen and (max-width: 375px) {
+@media screen and (max-width: 374px) {
     .item-title {
         width: 0.5rem;
         transform: scale(0.8);
+    } 
+    .scaleWidth{
+        transform: scale(0.8);
     }
-    // body{
-    //     transform: scale(0.8);
-    // }
 }
 
 .home-top{//顶部布局
@@ -49,12 +49,36 @@
     
 }
 
-.home-main{
-    background-color: #fff;
-    .headline{
+.home-main{ 
+    .titleNav{
         height: 0.16rem;
+        margin: 0.16rem 0;
         .more{
-            font-size: 0.08rem; 
+            font-size: 0.12rem; 
+            line-height: 0.12rem;
+            .arrows{
+                width: 0.06rem;
+                height: 0.15rem;
+                padding-left: 0.06rem;
+                img{
+                    width: 100%;
+                }
+            }
+        }
+    }
+    .video-box{
+        .video-item{
+            width: 1.37rem;
+            height: 0.85rem;
+            border-radius:0.05rem; 
+            video{
+                width: 100%;
+            }
+        }
+        .video-des{
+            font-size: 0.10rem;
+            line-height: 0.10rem;
+            margin-top: 0.05rem;
         }
     }
 }
