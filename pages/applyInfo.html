@@ -4,17 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport"   content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>历史报名-详情页-钳工</title>
+    <link rel="stylesheet" href="https://res.wx.qq.com/open/libs/weui/2.4.0/weui.min.css">
     <link rel="stylesheet" href="./../css/base.css">   
     <link rel="stylesheet" href="./../css/apply.css"> 
 </head>
+<script src="../js/zepto.min.js"></script>
 <body>
     <div class="apply-history-info-box"> 
         <div class="history-list-info flsb">
             <div class="lable blod flc-y">
                 姓名
             </div>
-            <div class="value flc-y">
-                邓麟
+            <div class="flc-y">
+                <input  class="weui-input" value="邓先生" type="text" maxlength="8">
             </div>
         </div>  
         <div class="history-list-info flsb">
@@ -22,7 +24,7 @@
                 身份证号
             </div>
             <div class="value flc-y">
-                32011119901230987X
+                <input  class="weui-input" pattern="[0-9]*" value="32011119901230987X" type="text" maxlength="18">      
             </div>
         </div>  
         <div class="history-list-info flsb">
@@ -30,7 +32,7 @@
                 性别
             </div>
             <div class="value flc-y">
-                男
+                <div class="weui-cell__bd" id="sexPicker">男</div>
             </div>
         </div>  
         <div class="history-list-info flsb">
@@ -38,7 +40,7 @@
                 民族
             </div>
             <div class="value flc-y">
-                汉
+                <input  class="weui-input"  value="汉族" type="text" >
             </div>
         </div>  
         <div class="history-list-info flsb">
@@ -46,7 +48,7 @@
                 手机号码
             </div>
             <div class="value flc-y">
-                13888886668
+                <input  class="weui-input" pattern="[0-9]*"   value="13888886668" type="number" maxlength="11">            
             </div>
         </div>  
         <div class="history-list-info flsb">
@@ -54,7 +56,7 @@
                 学历
             </div>
             <div class="value flc-y">
-                中专或同等学历
+                <input  class="weui-input" value="中专或同等学历" type="text" maxlength="10">          
             </div>
         </div>  
         <div class="history-list-info flsb">
@@ -62,7 +64,7 @@
                 健康状况
             </div>
             <div class="value flc-y">
-                合格
+                <div class="weui-cell__bd" id="healthyPicker">合格</div>                            
             </div>
         </div>  
         <div class="history-list-info flsb">
@@ -70,7 +72,7 @@
                 工作单位
             </div>
             <div class="value flc-y">
-                西北煤炭动力集团
+                <input  class="weui-input" value="西北煤炭动力集团" type="text" maxlength="10">         
             </div>
         </div>  
         <div class="history-list-info flsb">
@@ -78,7 +80,7 @@
                 通讯地址
             </div>
             <div class="value flc-y">
-                陕西省 西安市 临潼区
+                <div class="weui-cell__bd" id="showArea">请选择地区</div>
             </div>
         </div>  
         <div class="history-list-info flsb">
@@ -86,7 +88,7 @@
                 邮政编码
             </div>
             <div class="value flc-y">
-                710600
+                <input  class="weui-input" pattern="[0-9]*" value="710600" type="number" maxlength="6">              
             </div>
         </div>  
         <div class="history-list-info flsb">
@@ -94,7 +96,7 @@
                 工种
             </div>
             <div class="value flc-y">
-                钳工
+                <input  class="weui-input" value="钳工" type="text" maxlength="10">              
             </div>
         </div>  
         <div class="history-list-info flsb">
@@ -102,7 +104,9 @@
                 学历证明
             </div>
             <div class="value flc-y">
-                已上传
+                <div id="educationFile" class="uload" >未上传
+                    <input id="educationInput"  style="opacity: 0;position: absolute;left: 0;"  type="file" accept="image/*" multiple/>
+                </div>    
             </div>
         </div>  
         <div class="history-list-info flsb">
@@ -110,7 +114,9 @@
                 体检表
             </div>
             <div class="value flc-y">
-                未上传
+                <div id="physicalFile" class="uload">未上传
+                    <input id="physicalInput"   style="opacity: 0;position: absolute;left: 0;"  type="file" accept="image/*" multiple/>
+                </div>   
             </div>
         </div>  
         <div class="history-list-info flsb">
@@ -118,11 +124,157 @@
                 半身照
             </div>
             <div class="value flc-y">
-                未上传
+                <div id="bustFile" class="uload">未上传
+                    <input id="bustInput"  style="opacity: 0;position: absolute;left: 0;"  type="file" accept="image/*" multiple/>
+                </div>   
             </div>
         </div>  
     </div>
     
-    <script src="../utils/rem.js"></script>
+<script src="../utils/rem.js"></script>
+<script type="text/javascript" src="https://res.wx.qq.com/open/libs/weuijs/1.2.1/weui.min.js"></script>
+<script>
+    //性别选择
+     $('#sexPicker').on('click', function () {
+        weui.picker([{
+            label: '男',
+            value: 0
+        }, {
+            label: '女',
+            value: 1
+        }], {
+            onChange: function (result) {
+               
+            },
+            onConfirm: function (result) {
+                $('#sexPicker').html(result[0]['label']);
+            },
+            title: '性别'
+        });
+    });
+    //健康
+        $('#healthyPicker').on('click', function () {
+        weui.picker([{
+            label: '合格',
+            value: 0
+        }, {
+            label: '不合格',
+            value: 1
+        }], {
+            onChange: function (result) {
+               
+            },
+            onConfirm: function (result) {
+                $('#healthyPicker').html(result[0]['label']);
+            },
+            title: '健康'
+        });
+    });
+    //通讯地址
+    $('#showArea').on('click', function () {
+			//php后台获取级联数组
+				jsonobj=[{
+					label: '广东',
+					value: 0,
+					children: [{
+						label: '广州',
+						value: 0,
+						children: [{
+							label: '海珠',
+							value: 0
+						}, {
+							label: '番禺',
+							value: 1
+						}]
+					}, {
+						label: '佛山',
+						value: 1,
+						children: [{
+							label: '禅城',
+							value: 0
+						}, {
+							label: '南海',
+							value: 1
+						}]
+					}]
+				}, {
+					label: '广西',
+					value: 1,
+					children: [{
+						label: '南宁',
+						value: 0,
+						children: [{
+							label: '青秀',
+							value: 0
+						}, {
+							label: '兴宁',
+							value: 1
+						}]
+					}, {
+						label: '桂林',
+						value: 1,
+						children: [{
+							label: '象山',
+							value: 0
+						}, {
+							label: '秀峰',
+							value: 1
+						}]
+					}]
+                }]		
+                weui.picker(jsonobj, {
+	            onChange: function (result) {
+	            },
+	            onConfirm: function (result) {
+	            	$("#showArea").html(result[0]['label']+" "+result[1]['label']+" "+result[2]['label']);
+	            }
+		        });
+    });
+    //学历证明
+    $("#educationInput").on("change", function(e){
+            var src, url = window.URL || window.webkitURL || window.mozURL, files = e.target.files;
+            for (var i = 0, len = files.length; i < len; ++i) {
+                var file = files[i];
+
+                if (url) {
+                    src = url.createObjectURL(file);
+                } else {
+                    src = e.target.result;
+                }
+                console.log(src)
+                $("#educationFile").html('已上传')
+            }
+        });
+    //体检表
+    $("#physicalInput").on("change", function(e){
+            var src, url = window.URL || window.webkitURL || window.mozURL, files = e.target.files;
+            for (var i = 0, len = files.length; i < len; ++i) {
+                var file = files[i];
+
+                if (url) {
+                    src = url.createObjectURL(file);
+                } else {
+                    src = e.target.result;
+                }
+                console.log(src)
+                $("#physicalFile").html('已上传')
+            }
+        });
+    //半身照
+    $("#bustInput").on("change", function(e){
+            var src, url = window.URL || window.webkitURL || window.mozURL, files = e.target.files;
+            for (var i = 0, len = files.length; i < len; ++i) {
+                var file = files[i];
+
+                if (url) {
+                    src = url.createObjectURL(file);
+                } else {
+                    src = e.target.result;
+                }
+                console.log(src)
+                $("#bustFile").html('已上传')
+            }
+        });
+</script>
 </body>
 </html>
